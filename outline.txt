@@ -1,0 +1,234 @@
+### Outline
+- History
+  - Background
+  - Motivations
+- NUSMods Beta
+- NUSMods v2.0
+- Application Architecture
+- Technical Challenges
+- Building a community
+- Moving Forward
+
+### NUSMods
+- What does it stand for?
+  - NUSModules
+  - NUSModerators
+  - NUSModifications
+- Officially, NUSModifications, but any of the above will be fine.
+
+### Goal
+- Enhance the quality of lives of NUS students
+- Encourage students to experiment and create original, community-engaging work.
+
+### Background
+- NUSMods predecessors
+  - Official NUS timetable builder
+  - Unofficial NUS timetable builder
+
+### Scratch your own itch
+- Back in 2011... Was not happy with existing timetable builders.
+  - Macs can't use the standalone Windows desktop app
+- Solve your own problems (and others too)
+
+### Build something, anything
+- Building stuff is the best way to learn
+- Practice your craft
+- NUSMods was originally built to learn JavaScript properly
+
+### First version: CORSET
+- Show CORSET iframe: http://ahbeng.github.io/nusmods-talk/corset/
+
+### You'll never feel ready enough
+- (for your MVP)
+- July 6, 2012: nusmods.com registered
+- July 19, 2012: "Public" launch
+
+### MVPs are for testing assumptions
+- Beng's assumptions: NUSMods' Unique Selling Proposition was the Module Finder
+
+### NUSMods Beta
+- Technology:
+  - Built with jQuery, Coffeescript, LESS, Jade
+  - Build process: CodeKit
+  - Crawling and processing module data: Node.js
+- It looked like this then:
+  - http://ahbeng.github.io/nusmods-talk/NUSMods-Offline/
+
+### Initial Reception
+- No one cared
+- Show Beng's Facebook post: https://www.facebook.com/benghee/posts/366283763441837
+
+### Most well-loved feature?
+- Colours
+  - Pastel colours -> Calming, soothing
+- Makes people want to look at their timetables
+
+### Summer 2014
+- Yang Shun and Ashray joined the team.
+- Yang Shun, together with Weiqing, built Corspedia:
+  - Easily searchable CORS statistics.
+- Ashray and Karan built Modmaven:
+  - Module pre-requisities tree.
+
+### Summer 2014
+- Integrated Corspedia and Modmaven.
+- UI refresh
+  - Official NUSMods Logo
+  - Dark mode, theme colours
+- Dedicated module pages
+- Module reviews
+
+### Current NUSMods
+- Backbone + Marionette, JavaScript, Handlebars, Browserify, SASS
+- Build process: Grunt
+- Back-end remains the same
+
+### Application Architecture
+- Client-side
+  - Single Page Application (SPA)
+- Server-side
+  - No database!
+  - Data stored as static JSON files
+  - Have a look: http://api.nusmods.com/
+
+### Single Page Applications
+- A webpage that is only loaded once. All necessary code - HTML, JS, CSS are retrieved in the initial page load.
+- Subsequent resources are dynamically loaded and added to the page as necessary.
+- Redraw parts of the UI without requiring a server roundtrip to retrieve the HTML.
+- Makes use of HTML5 pushState() API to modify the URL.
+- Popular SPAs that you have been using without realizing:
+  - Facebook
+  - Gmail
+- Benefits:
+  - Repeated HTML, CSS, JS not loaded over and over again.
+  - Native-like fluid experience. No page refreshes.
+  - Enforces decoupling of front-end and server. We rewrote NUSMods without modifying the server at all.
+- Downsides:
+  - JavaScript must be enabled in the browser.
+  - Search Engine Optimization
+    - Web crawlers do not execute JavaScript which SPA uses to render the page.
+    - Page content do not get indexed by web crawlers.
+  - Analytics:
+    - Analytics tools such as Google Analytics rely heavily upon entire new pages loading in the browser,
+      initiated by a URL change. SPAs don’t work this way. After the first page load, all subsequent page and content changes are handled internally by the application. So the browser never triggers a new page load, nothing gets added to the browser history, and the analytics package has no idea who’s doing what on the site.
+  - Speed of initial page load:
+    - Initial page load is slow: Downloading of all JavaScript framework and application code.
+    - Tradeoff: Slow initial waiting time for smooth UX subsequently.
+
+### Client-side
+- Generated using Yeoman
+  - Scaffolds out the basic structure of a web app with a Grunt dev and build process
+- Grunt dev process:
+  - Watches the source code and reloads the page when changes are detected
+- Grunt build process:
+  - Handlebars -> HTML
+  - SASS -> CSS
+  - All CSS and JS compressed and minified into one single CSS file
+  - Built into the `dist` directory for deployment
+
+### Server-side
+- No need for database -> No user-specific data is stored in our servers.
+- CRON job that crawls NUS pages every hour on weekdays.
+- Caches the crawled HTML files in our servers.
+- Provide an NUSMods API for usage by students.
+
+### NUSMods API
+- Consolidates and normalizes NUS module information from:
+  - CORS historical bidding statistics
+  - CORS module information listings
+  - IVLE API
+  - NUS Bulletin
+  - NUS Examination Time-Table
+
+### Interesting Techniques
+- Timetable Exporting
+- Themes and Colours
+- Responsive timetables
+
+### Timetable Exporting
+- Excel, HTML and iCalendar files generated directly in-browser
+- Eliminates server round trip and can be downloaded even while offline
+- For JPG / PDF, exported HTML is rendered by server in a headless WebKit instance
+
+### Data URIs
+- <a href="data:application/vnd.ms-excel,%3C%3Fxml%20version%3D%221.0%22%3F
+%3E%3CWorkbook%20xmlns%3D%22urn%3Aschemas-microsoft-com%3Aoffice%3A
+spreadsheet%22%20xmlns%3Ass%3D%22urn%3Aschemas-microsoft-com%3Aoffice%3A
+spreadsheet%22%3E…”>Excel File</a>
+
+### SpreadsheetML
+- Supported since Office 2003
+- Refer to http://ahbeng.github.io/nusmods-talk/#/43
+
+### Themes and Colours
+- Generated using [base16-builder](https://github.com/chriskempson/base16-builder)
+- Change the appearance just by adding/remove classes from the <body> element
+
+### Responsive Timetables
+- Timetable on the main page
+  - Built using <table>
+  - Does not fit on mobile screens
+  - Not responsive
+- CSS Flex to the rescue!
+
+### CSS Flex
+- Yada yada.
+- Show Friends page timetable.
+
+### Using Data
+- Fill in
+
+### Building a community
+- Engage the talented young people in NUS to make NUSMods better
+  - Users
+  - Developers
+  - Reviewers
+
+### Users
+- Facebook
+  - Almost 4k likes
+  - Push out updates or important announcements to our users.
+  - Adding a like button to the most prominent page of NUSMods even though it clutters the page. Visibility is important.
+  - Many users give feedback and/or report problems via our Facebook page.
+  - Insert 2015 timetable image.
+- Twitter
+  - Not very active, but we reply to tweets mentioning NUSMods.
+
+### Developers
+- NUSMods Github stats
+- Talented young developers
+- Hipchat Group
+- 1st ever NUSMods developers meetup
+
+### Reviewers
+- With the release of v2.0, students can review modules on NUSMods.
+- Initial phase: manual populating of reviews database. @_@
+- Literally googled for reviews of NUS modules and requested for permission to repost onto NUSMods.
+- Raise awareness of ability to review modules: Module review contest
+
+### Moving Forward
+- Sharing of friends timetable: NUSMods Collab.
+  - Show youtube video.
+  - Yang Shun's CS3240 project.
+  - Scalable and secure back-end is not easy to build >_<
+- A better IVLE.
+- More colour theme customization
+- More user-created information in NUSMods.
+- NUS modules planner.
+
+### Join us!
+- Open source development is a good way to learn new things!
+  - Google Summer of Code, Facebook Open Academy.
+  - Guidance from experienced peers.
+- Boost your portfolio as a developer.
+  - Increasing number of employers are requesting to look at a job applicant's Github profile.
+
+### Getting Started
+- Hang out on our HipChat development channel
+- Look at open issues
+- Chat and discuss with us
+- Make a Pull Request (PR)
+- Make first few PRs in a helpful environment
+- We'll now hear from Xinan, Bili, on how they dived into NUSMods development.
+
+
