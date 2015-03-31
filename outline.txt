@@ -43,9 +43,6 @@
 - July 6, 2012: nusmods.com registered
 - July 19, 2012: "Public" launch
 
-### MVPs are for testing assumptions
-- Beng's assumptions: NUSMods' Unique Selling Proposition was the Module Finder
-
 ### NUSMods Beta
 - Technology:
   - Built with jQuery, Coffeescript, LESS, Jade
@@ -79,7 +76,6 @@
 - Module reviews
 
 ### Current NUSMods
-- Backbone + Marionette, JavaScript, Handlebars, Browserify, SASS
 - Build process: Grunt
 - Back-end remains the same
 
@@ -177,6 +173,11 @@ spreadsheet%22%3E…”>Excel File</a>
 
 ### Using Data
 - Fill in
+
+
+### MVPs are for testing assumptions
+- Beng's assumptions: NUSMods' Unique Selling Proposition was the Module Finder
+
 
 ### Building a community
 - Engage the talented young people in NUS to make NUSMods better
